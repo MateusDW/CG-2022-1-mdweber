@@ -29,7 +29,6 @@ int setupGeometry();
 
 const GLuint WIDTH = 1024, HEIGHT = 768;
 
-bool rotateX=false, rotateY=false, rotateZ=false;
 int currentViewMode = 1;
 
 int main()
@@ -112,19 +111,6 @@ int main()
 
 		model = glm::mat4(1);
 
-		if (rotateX)
-		{
-			model = glm::rotate(model, angle, glm::vec3(1.0f, 0.0f, 0.0f));
-		}
-		else if (rotateY)
-		{
-			model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		}
-		else if (rotateZ)
-		{
-			model = glm::rotate(model, angle, glm::vec3(0.0f, 0.0f, 1.0f));
-		}
-
 		if (currentViewMode == 1) // frente
 		{
 			view = glm::lookAt(
@@ -171,7 +157,7 @@ int main()
 		// não atualizando a projection porque ela não muda
 		
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 14 * 3);
+		glDrawArrays(GL_TRIANGLES, 0, 14 * 3); // 14 pontos com 3 coordenadas
 		glDrawArrays(GL_POINTS, 0, 14 * 3);
 		glBindVertexArray(0);
 
@@ -187,27 +173,8 @@ int main()
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	{
 		glfwSetWindowShouldClose(window, GL_TRUE);
-
-	if (key == GLFW_KEY_X && action == GLFW_PRESS)
-	{
-		rotateX = true;
-		rotateY = false;
-		rotateZ = false;
-	}
-
-	if (key == GLFW_KEY_Y && action == GLFW_PRESS)
-	{
-		rotateX = false;
-		rotateY = true;
-		rotateZ = false;
-	}
-
-	if (key == GLFW_KEY_Z && action == GLFW_PRESS)
-	{
-		rotateX = false;
-		rotateY = false;
-		rotateZ = true;
 	}
 
 	if (key == GLFW_KEY_1 && action == GLFW_PRESS)

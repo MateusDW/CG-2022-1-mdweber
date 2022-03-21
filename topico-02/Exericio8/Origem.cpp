@@ -60,13 +60,38 @@ int main()
 
 	GLuint VAO = setupGeometry();
 
+	shader.Use();
 
-	glUseProgram(shader.ID);
-
+	// matriz model
 	glm::mat4 model = glm::mat4(1);
+	model = glm::rotate(
+		model, 
+		(GLfloat)glfwGetTime(), 
+		glm::vec3(1.0f, 0.0f, 0.0f)
+	);
 	GLint modelLoc = glGetUniformLocation(shader.ID, "model");
-	model = glm::rotate(model, /*(GLfloat)glfwGetTime()*/glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
+
+	// matriz view (posição e orientação da cam)
+	glm::mat4 view = glm::mat4(1);
+	view = glm::lookAt(
+		glm::vec3(0.0f, 0.0f, 3.0f),
+		glm::vec3(0.0f, 0.0f, 0.0f), 
+		glm::vec3(0.0f, 1.0f, 0.0f)
+	);
+	GLint viewLoc = glGetUniformLocation(shader.ID, "view");
+	glUniformMatrix4fv(viewLoc, 1, FALSE, glm::value_ptr(view));
+
+	// matriz projection (profundidade)
+	glm::mat4 projection = glm::mat4(1);
+	projection = glm::perspective(
+		45.0f,
+		(GLfloat) WIDTH / (GLfloat) HEIGHT,
+		0.1f,
+		100.0f
+	);
+	GLint projectionLoc = glGetUniformLocation(shader.ID, "projection");
+	glUniformMatrix4fv(projectionLoc, 1, FALSE, glm::value_ptr(projection));
 
 
 	glEnable(GL_DEPTH_TEST);

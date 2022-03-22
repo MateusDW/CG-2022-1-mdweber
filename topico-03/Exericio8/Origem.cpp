@@ -25,6 +25,7 @@ using namespace std;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 
 int setupGeometry();
@@ -34,6 +35,7 @@ const GLuint WIDTH = 1024, HEIGHT = 768;
 // camera
 glm::vec3 cameraPos, cameraFront, cameraUp;
 float yaw = -90.0f, pitch = 0.0f;
+float fov = 45.0f;
 
 // tempo
 float deltaTime = 0.0f;
@@ -53,6 +55,7 @@ int main()
 
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -105,7 +108,7 @@ int main()
 	// matriz projection (profundidade)
 	glm::mat4 projection = glm::mat4(1);
 	projection = glm::perspective(
-		45.0f,
+		glm::radians(fov),
 		(GLfloat) WIDTH / (GLfloat) HEIGHT,
 		0.1f,
 		100.0f
@@ -134,11 +137,17 @@ int main()
 		float angle = (GLfloat)glfwGetTime();
 
 		model = glm::mat4(1);
-
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		projection = glm::perspective(
+			glm::radians(fov),
+			(GLfloat)WIDTH / (GLfloat)HEIGHT,
+			0.1f,
+			100.0f
+		);
 
 		glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(viewLoc, 1, FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projectionLoc, 1, FALSE, glm::value_ptr(projection));
 		
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 14 * 3); // 14 pontos com 3 coordenadas
@@ -195,6 +204,16 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	front.y = sin(glm::radians(pitch));
 	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	cameraFront = glm::normalize(front);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	if (fov >= 1.0f && fov <= 45.0f)
+		fov -= yoffset;
+	if (fov <= 1.0f)
+		fov = 1.0f;
+	if (fov >= 45.0f)
+		fov = 45.0f;
 }
 
 int setupGeometry()

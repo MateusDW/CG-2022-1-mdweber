@@ -33,6 +33,9 @@ const GLuint WIDTH = 1024, HEIGHT = 768;
 
 glm::vec3 cameraPos, cameraFront, cameraUp;
 
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
+
 int main()
 {
 	
@@ -106,6 +109,10 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
 		processInput(window);
 
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f); //cor de fundo
@@ -246,7 +253,7 @@ void processInput(GLFWwindow *window)
 	// verifica callbacks de input
 	glfwPollEvents();
 
-	float cameraSpeed = 0.05f;
+	float cameraSpeed = 2.5f * deltaTime;
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) // mover para frente
 	{

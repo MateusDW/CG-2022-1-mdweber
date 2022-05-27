@@ -5,7 +5,7 @@ Realizado por Mateus Dittberner Weber.
 |--|--|
 | ![enter image description here](https://raw.githubusercontent.com/MateusDW/CG-2022-1-mdweber/main/topico-13/exercicio-1/exercicio-1-quadrante-3.bmp) | ![enter image description here](https://raw.githubusercontent.com/MateusDW/CG-2022-1-mdweber/main/topico-13/exercicio-1/exercicio-1-quadrante-4.bmp) |
 
-## Exercício 2
+## Exercício 2 - Explorar nros diferentes de oitavas, frequencia e persistência (8 imagens)
 ![Imagem 1](https://raw.githubusercontent.com/MateusDW/CG-2022-1-mdweber/main/topico-13/exercicio-2/exercicio-2-imagem-1.bmp)  
 Imagem 1
 
@@ -30,7 +30,7 @@ Imagem 7
 ![Imagem 8](https://raw.githubusercontent.com/MateusDW/CG-2022-1-mdweber/main/topico-13/exercicio-2/exercicio-2-imagem-8.bmp)  
 Imagem 8
 
-## Exercício 3
+## Exercício 3 - Criar pelo menos 2 diferentes mapeamentos de biomas (Gradientes) (2 imagens)
 ![Bioma 1](https://raw.githubusercontent.com/MateusDW/CG-2022-1-mdweber/main/topico-13/exercicio-3/exercicio-3-bioma-1.bmp)  
 Bioma 1
 

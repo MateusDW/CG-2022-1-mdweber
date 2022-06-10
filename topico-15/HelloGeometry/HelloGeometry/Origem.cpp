@@ -138,7 +138,7 @@ int main()
 		processInput(window);
 
 		// Limpa o buffer de cor
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f); //cor de fundo
+		glClearColor(0.5f, 0.5f, 0.5f, 1.0f); //cor de fundo
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Setando largura da linha e tamanho do ponto (GL_LINE e GL_POINTS)
@@ -268,7 +268,7 @@ GLuint setupSeedPoints(int rows, int cols, Shader &shader)
 	float y0 = -1.0f;
 
 	int k = -1; //indice do array
-	bool black = true;
+	int colorCounter = 1;
 	for (int i = 0; i < rows; i++)
 	{
 		for (int j = 0; j < cols; j++)
@@ -278,21 +278,28 @@ GLuint setupSeedPoints(int rows, int cols, Shader &shader)
 			points[++k] = x;
 			points[++k] = y;
 			points[++k] = z;
-			if (black)
+			if (colorCounter % 3 == 1) // blue
 			{
 				points[++k] = 0.0f;
 				points[++k] = 0.0f;
-				points[++k] = 0.0f;
-				black = !black;
-			}
-			else
-			{
 				points[++k] = 1.0f;
-				points[++k] = 0.0f;
-				points[++k] = 0.0f;
-				black = !black;
 			}
 			
+			if (colorCounter % 3 == 2) // black
+			{
+				points[++k] = 0.0f;
+				points[++k] = 0.0f;
+				points[++k] = 0.0f;
+			}
+
+			if (colorCounter % 3 == 0) // white
+			{
+				points[++k] = 1.0f;
+				points[++k] = 1.0f;
+				points[++k] = 1.0f;
+			}
+
+			colorCounter++;
 		}
 	}
 
